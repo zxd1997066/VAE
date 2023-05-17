@@ -328,5 +328,8 @@ test_vae = TEST_VAE(params, model, args)
 if args.precision == "bfloat16":
     with torch.cpu.amp.autocast(enabled=True, dtype=torch.bfloat16):
         test_vae.test()
+elif args.precision == "float16":
+    with torch.cpu.amp.autocast(enabled=True, dtype=torch.half):
+        test_vae.test()
 else:
     test_vae.test()
