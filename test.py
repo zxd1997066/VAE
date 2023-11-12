@@ -56,6 +56,10 @@ parser.add_argument('--precision', default="float32",
                         help='precision, "float32" or "bfloat16"')
 parser.add_argument('--channels_last', type=int, default=1, help='use channels last format')
 parser.add_argument('--arch', type=str, default=None, help='model name')
+parser.add_argument("--compile", action='store_true', default=False,
+                    help="enable torch.compile")
+parser.add_argument("--backend", type=str, default='inductor',
+                    help="enable torch.compile backend")
 
 args = parser.parse_args()
 
@@ -185,6 +189,8 @@ class TEST_VAE:
         if self.args.resume:
             self.load_checkpoint(self.args.resume)
         self.model.eval()
+        if self.args.compile:
+            self.model = torch.compile(self.model, backend=self.args.backend, options={"freezing": True})
         if self.args.channels_last:
             self.model = self.model.to(memory_format=torch.channels_last)
             print("---- Use channels last format.")
