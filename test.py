@@ -180,6 +180,7 @@ class TEST_VAE:
         batch_time = AverageMeter('Time', ':6.3f')
 
         if self.cuda_enabled:
+            self.args.gpu = 0
             torch.cuda.set_device(self.args.gpu)
             self.model.cuda(self.args.gpu)
             self.device = torch.device("cuda:{0}".format(self.args.gpu))
