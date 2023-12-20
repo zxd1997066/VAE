@@ -304,7 +304,7 @@ class TEST_VAE:
     @property
     def cuda_enabled(self) -> bool:
          self.args.cuda = torch.cuda.is_available()
-         return self.args.cuda and self.args.gpu is not None
+         return self.args.cuda
 
 class AverageMeter(object):
     """Computes and stores the average and current value"""
