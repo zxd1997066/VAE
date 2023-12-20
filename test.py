@@ -303,7 +303,7 @@ class TEST_VAE:
         workbook.close()
     @property
     def cuda_enabled(self) -> bool:
-         self.args.cuda = not self.args.no_cuda and torch.cuda.is_available()
+         self.args.cuda = torch.cuda.is_available()
          return self.args.cuda and self.args.gpu is not None
 
 class AverageMeter(object):
