@@ -60,7 +60,8 @@ parser.add_argument("--compile", action='store_true', default=False,
                     help="enable torch.compile")
 parser.add_argument("--backend", type=str, default='inductor',
                     help="enable torch.compile backend")
-
+parser.add_argument("--triton_cpu", action='store_true', default=False,
+                    help="enable triton_cpu")
 args = parser.parse_args()
 
 params = {
@@ -178,7 +179,10 @@ class TEST_VAE:
 
     def test(self):
         batch_time = AverageMeter('Time', ':6.3f')
-
+        if self.args.triton_cpu:
+            print("run with triton cpu backend")
+            import torch._inductor.config
+            torch._inductor.config.cpu_backend="triton"
         if self.cuda_enabled:
             self.args.gpu = 0
             torch.cuda.set_device(self.args.gpu)
