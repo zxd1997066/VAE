@@ -178,6 +178,7 @@ class TEST_VAE:
             raise ValueError('Checkpoint does not exist')
 
     def test(self):
+        import torch
         batch_time = AverageMeter('Time', ':6.3f')
         if self.args.triton_cpu:
             print("run with triton cpu backend")
